@@ -8,9 +8,6 @@ public class MyData {
     private static final String PRODUCTS_PATH = "products.csv";
     private static final String ASSORTMENT_PATH = "assortment.csv";
 
-    private static Scanner scanner;
-    private static File file;
-
     private static Map<Integer, City> cities = new HashMap<>();
 
     public static void fillMainData() {
@@ -25,9 +22,8 @@ public class MyData {
     }
 
     private static void fillAssortment() {
-        file = new File(ASSORTMENT_PATH);
-        try {
-            scanner = new Scanner(file);
+        File file = new File(ASSORTMENT_PATH);
+        try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
                 String tempStr = scanner.nextLine().trim();
                 String[] splitedStr = tempStr.split(";");
@@ -38,15 +34,11 @@ public class MyData {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        finally {
-            scanner.close();
-        }
     }
 
     private static void fillCities(Map<Integer, City> cities) {
-        file = new File(CITIES_PATH);
-        try {
-            scanner = new Scanner(file);
+        File file = new File(CITIES_PATH);
+        try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
                 String tempStr = scanner.nextLine().trim();
                 String[] splitedStr = tempStr.split(";");
@@ -56,20 +48,17 @@ public class MyData {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        finally {
-            scanner.close();
-        }
     }
 
     private static void fillShops(Map<Integer, City> cities) {
-        file = new File(SHOPS_PATH);
-        try {
-            scanner = new Scanner(file);
+        File file = new File(SHOPS_PATH);
+        try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
                 String tempStr = scanner.nextLine().trim();
                 String[] splitedStr = tempStr.split(";");
+                int cityID = Integer.parseInt(splitedStr[2]);
                 for(City city : cities.values()) {
-                    if (city.getID() == Integer.parseInt(splitedStr[2])) {
+                    if (city.getID() == cityID) {
                         city.addShop(new Shop(Integer.valueOf(splitedStr[0]), splitedStr[1], splitedStr[3]));
                     }
                 }
@@ -77,23 +66,19 @@ public class MyData {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        finally {
-            scanner.close();
-        }
     }
 
     private static void fillProducts(Map<Integer, City> cities) {
-        file = new File(PRODUCTS_PATH);
-        try {
-            scanner = new Scanner(file);
+        File file = new File(PRODUCTS_PATH);
+        try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
                 String tempStr = scanner.nextLine().trim();
                 String[] splitedStr = tempStr.split(";");
+                int shopID = Integer.parseInt(splitedStr[0]);
+                int productID = Integer.parseInt(splitedStr[1]);
+                int amn = Integer.parseInt(splitedStr[2]);
                 for(City city : cities.values()) {
                     for (Shop shop : city.getShops().values()) {
-                        int shopID = Integer.parseInt(splitedStr[0]);
-                        int productID = Integer.parseInt(splitedStr[1]);
-                        int amn = Integer.parseInt(splitedStr[2]);
                         if (shop.getID() == shopID) {
                             shop.addProduct(Assortment.products.get(productID), amn);
                         }
@@ -102,9 +87,6 @@ public class MyData {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
-        finally {
-            scanner.close();
         }
     }
 }
