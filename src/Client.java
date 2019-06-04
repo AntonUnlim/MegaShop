@@ -1,19 +1,17 @@
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Client extends Thread {
     private String name;
-    private Map<Product, Integer> cart;
+    private Map<Integer, Integer> productBasket;
     private float cash;
 
     private Shop selectedShop;
-    private Scanner input = new Scanner(System.in);
 
     public Client(String name) {
         this.name = name;
-        cart = new HashMap<>();
+        productBasket = new HashMap<>();
 
         cash = Math.round((new Random()).nextFloat()*1000);
     }
@@ -28,11 +26,11 @@ public class Client extends Thread {
 
     public synchronized boolean buyProduct(Product product, int amn) {
         if (product.getPrice() * amn > cash) return false;
-        if(cart.get(product) != null) {
-            cart.put(product, cart.get(product) + amn);
+        if(productBasket.containsKey(product.getID())) {
+            productBasket.put(product.getID(), productBasket.get(product.getID()) + amn);
         }
         else {
-            cart.put(product, amn);
+            productBasket.put(product.getID(), amn);
         }
         cash -= product.getPrice() * amn;
         return true;
@@ -50,12 +48,6 @@ public class Client extends Thread {
 
         System.out.println(getName() + ", you have entered " + selectedShop.getName() + " shop");
 
-    }
-
-    @Override
-    public void interrupt() {
-        super.interrupt();
-        input.close();
     }
 
     @Override

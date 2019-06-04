@@ -5,7 +5,7 @@ public class Shop {
     private int ID;
     private String name;
     private String address;
-    private Map<Product, Integer> products;
+    private Map<Integer, Integer> products;
 
     public Shop(int shopID, String name, String address) {
         this.ID = shopID;
@@ -23,13 +23,13 @@ public class Shop {
     }
 
     public void addProduct(Product product, int amn) {
-        products.put(product, amn);
+        products.put(product.getID(), amn);
     }
 
     public synchronized boolean sellProduct(Product product, int amn) {
-        int currentAmn = products.get(product);
+        int currentAmn = products.get(product.getID());
         if (currentAmn < amn || currentAmn <= 0) return false;
-        products.put(product, currentAmn - amn);
+        products.put(product.getID(), currentAmn - amn);
         return true;
     }
 
