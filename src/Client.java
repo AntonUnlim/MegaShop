@@ -8,7 +8,6 @@ public class Client extends Thread {
     private Map<Product, Integer> cart;
     private float cash;
 
-    private String isExit = "";
     private Shop selectedShop;
     private Scanner input = new Scanner(System.in);
 
@@ -17,10 +16,6 @@ public class Client extends Thread {
         cart = new HashMap<>();
 
         cash = Math.round((new Random()).nextFloat()*1000);
-    }
-
-    public Map<Product, Integer> getCart() {
-        return cart;
     }
 
     public float getCash() {
@@ -46,27 +41,15 @@ public class Client extends Thread {
     public void shopping() {
         System.out.println(getName() + ", you have " + getCash() + " cash");
 
-        /*System.out.println("What city, from the list below, do you wish to visit? (input city ID)");
-        for (City city : MyData.getCities().values()) {
-            System.out.println(city);
-        }*/
-
-        int selectedCityID = 1; //input.nextInt();
+        int selectedCityID = 1;
         City selectedCity = MyData.getCities().get(selectedCityID);
         System.out.println(getName() + ", you have arrived to " + selectedCity.getName() + "!");
 
-        /*System.out.println("Please, choose the shop that you want to visit? (input shop ID)");
-        for (Shop shop : selectedCity.getShops().values()) {
-            System.out.println(shop);
-        }*/
-
-        int selectedShopID = 1; //input.nextInt();
+        int selectedShopID = 1;
         selectedShop = selectedCity.getShops().get(selectedShopID);
 
         System.out.println(getName() + ", you have entered " + selectedShop.getName() + " shop");
 
-        //System.out.println("Select product and amount, that you want to buy (input product ID,Amn)." +
-        //        "\nPrint EXIT after you finish buying\n");
     }
 
     @Override
@@ -79,30 +62,14 @@ public class Client extends Thread {
     public void run() {
         while (true) {
             Random rand = new Random();
-            //System.out.println("Products available:");
-            /*for (Product product : selectedShop.getProducts().keySet()) {
-                System.out.println(product + " Available amount - " + selectedShop.getProducts().get(product));
-            }*/
-            //System.out.println("Enter productID and Amount (separated with comma)");
-            //isExit = input.next();
-
-            /*if (isExit.toUpperCase().equals("EXIT")) {
-                System.out.println("Good bye!");
-                break;
-            }*/
-            //String[] inputString = isExit.split(",");
-            //int selectedProductID = Integer.parseInt(inputString[0]);
-            int selectedProductID = rand.nextInt(5) + 1;
+           int selectedProductID = rand.nextInt(5) + 1;
             System.out.println(getClientName() + " generated " + selectedProductID);
-            //int selectedAmount = Integer.parseInt(inputString[1]);
             int selectedAmount = 1;
             Product selectedProduct = Assortment.products.get(selectedProductID);
             if (selectedShop.sellProduct(selectedProduct, selectedAmount)) {
                 if (buyProduct(selectedProduct, selectedAmount)) {
-                    //System.out.println("Success! Enter next product or Exit");
                     System.out.println(getClientName() + " has bought " + selectedProduct.getName());
                 } else {
-                    //System.out.println("You have not enough money");
                     System.out.println(getClientName() + " out of money");
                     break;
                 }
@@ -110,15 +77,7 @@ public class Client extends Thread {
                 System.out.println("Not enough!");
             }
 
-            //System.out.println("Cash left: " + getCash());
             System.out.println(getClientName() + " has " + getCash() + " cash left");
-            /*System.out.println("the content of the cart:");
-            if (getCart().size() == 0) System.out.println("Empty!");
-            else {
-                for (Product product : getCart().keySet()) {
-                    System.out.println(product + ", amount - " + getCart().get(product) + "\n");
-                }
-            }*/
         }
     }
 }

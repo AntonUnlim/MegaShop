@@ -22,14 +22,6 @@ public class Shop {
         return name;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public Map<Product, Integer> getProducts() {
-        return products;
-    }
-
     public void addProduct(Product product, int amn) {
         products.put(product, amn);
     }
