@@ -37,16 +37,16 @@ public class Client extends Thread {
     }
 
     public void shopping() {
-        System.out.println(getName() + ", you have " + getCash() + " cash");
+        System.out.println(getClientName() + "\t, you have \t" + getCash() + "\t cash");
 
         int selectedCityID = 1;
         City selectedCity = MyData.getCities().get(selectedCityID);
-        System.out.println(getName() + ", you have arrived to " + selectedCity.getName() + "!");
+        System.out.println(getClientName() + "\t, you have arrived to \t" + selectedCity.getName() + "\t!");
 
         int selectedShopID = 1;
         selectedShop = selectedCity.getShops().get(selectedShopID);
 
-        System.out.println(getName() + ", you have entered " + selectedShop.getName() + " shop");
+        System.out.println(getClientName() + "\t, you have entered \t" + selectedShop.getName() + "\t shop");
 
     }
 
@@ -54,22 +54,23 @@ public class Client extends Thread {
     public void run() {
         while (true) {
             Random rand = new Random();
-           int selectedProductID = rand.nextInt(5) + 1;
-            System.out.println(getClientName() + " generated " + selectedProductID);
+            int selectedProductID = rand.nextInt(5) + 1;
             int selectedAmount = 1;
             Product selectedProduct = Assortment.products.get(selectedProductID);
+            System.out.println(getClientName() + "\t generated \t" + selectedProduct.getName());
             if (selectedShop.sellProduct(selectedProduct, selectedAmount)) {
                 if (buyProduct(selectedProduct, selectedAmount)) {
-                    System.out.println(getClientName() + " has bought " + selectedProduct.getName());
+                    System.out.println(getClientName() + "\t has bought \t" + selectedProduct.getName());
                 } else {
-                    System.out.println(getClientName() + " out of money");
+                    System.out.println(getClientName() + "\t out of money");
                     break;
                 }
             } else {
-                System.out.println("Not enough!");
+                System.out.println(getClientName() + "\tNot enough!\t" + selectedProduct.getName());
+                break;
             }
 
-            System.out.println(getClientName() + " has " + getCash() + " cash left");
+            System.out.println(getClientName() + "\t has \t" + getCash() + "\t cash left");
         }
     }
 }
