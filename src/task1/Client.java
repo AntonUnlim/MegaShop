@@ -1,3 +1,10 @@
+package task1;
+
+import common.Assortment;
+import common.City;
+import common.MyData;
+import common.Product;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;

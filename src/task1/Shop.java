@@ -1,3 +1,7 @@
+package task1;
+
+import common.Product;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,6 +39,6 @@ public class Shop {
 
     @Override
     public String toString() {
-        return "Shop: ID - " + ID + ", Name - " + name + ", address - " + address;
+        return "task1.Shop: ID - " + ID + ", Name - " + name + ", address - " + address;
     }
 }

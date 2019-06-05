@@ -1,3 +1,7 @@
+package common;
+
+import task1.Shop;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;

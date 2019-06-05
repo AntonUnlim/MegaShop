@@ -1,3 +1,7 @@
+package common;
+
+import task1.Shop;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +34,6 @@ public class City {
 
     @Override
     public String toString() {
-        return "City: ID - " + ID + ", Name - " + name;
+        return "common.City: ID - " + ID + ", Name - " + name;
     }
 }

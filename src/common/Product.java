@@ -1,3 +1,5 @@
+package common;
+
 import java.util.Objects;
 
 public class Product {
@@ -25,7 +27,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product: ID - " + ID + ", Name - " + name + ", price - " + price;
+        return "common.Product: ID - " + ID + ", Name - " + name + ", price - " + price;
     }
 
     @Override

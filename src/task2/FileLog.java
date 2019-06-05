@@ -1,3 +1,7 @@
+package task2;
+
+import common.MyData;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

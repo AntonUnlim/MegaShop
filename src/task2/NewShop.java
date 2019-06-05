@@ -1,3 +1,7 @@
+package task2;
+
+import common.Product;
+
 import java.util.LinkedList;
 import java.util.Queue;
 

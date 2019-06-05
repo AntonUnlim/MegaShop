@@ -1,3 +1,7 @@
+package task2;
+
+import common.Product;
+
 public class Producer extends Thread {
     private NewShop shop;
     private Product product;
@@ -12,10 +16,10 @@ public class Producer extends Thread {
             synchronized (shop) {
                 while (shop.getStore().size() == shop.storeCapacity()) {
                     shop.wait();
-                    FileLog.writeToFile("Producer waiting..." + "\n");
+                    FileLog.writeToFile("task2.Producer waiting..." + "\n");
                     FileLog.writeToFile("Amount of products in store - " + shop.getStore().size() + "\n");
                 }
-                FileLog.writeToFile("Producer produced - " + product.getName() + "\n");
+                FileLog.writeToFile("task2.Producer produced - " + product.getName() + "\n");
                 shop.getStore().add(product);
                 FileLog.writeToFile("Amount of products in store - " + shop.getStore().size() + "\n");
                 shop.notify();

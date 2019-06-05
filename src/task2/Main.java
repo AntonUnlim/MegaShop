@@ -1,3 +1,9 @@
+package task2;
+
+import common.Assortment;
+import common.MyData;
+import common.Product;
+
 import java.util.ArrayList;
 import java.util.List;
 
