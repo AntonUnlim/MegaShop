@@ -17,10 +17,15 @@ public class Consumer extends Thread {
     public void getProduct() throws InterruptedException {
         while (true) {
             synchronized (shop) {
-                while(shop.getStore().size() == 0)
+                while(shop.getStore().size() == 0) {
                     shop.wait();
+                    FileLog.writeToFile(name + " waiting...\n");
+                    FileLog.writeToFile("Amount of products in store - " + shop.getStore().size() + "\n");
+                }
                 listOfProducts.add(shop.getStore().remove());
-                System.out.println(name + " consumed - " + product.getName());
+                FileLog.writeToFile(name + " consumed - " + product.getName() + "\n");
+                FileLog.writeToFile("Amount of products in store - " + shop.getStore().size() + "\n");
+                FileLog.writeToFile("Amount of products in list - " + listOfProducts.size() + "\n");
                 shop.notify();
             }
         }

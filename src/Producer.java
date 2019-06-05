@@ -10,10 +10,14 @@ public class Producer extends Thread {
     public void addProduct() throws InterruptedException {
         while (true) {
             synchronized (shop) {
-                while (shop.getStore().size() == shop.storeCapacity())
+                while (shop.getStore().size() == shop.storeCapacity()) {
                     shop.wait();
-                System.out.println("Producer produced - " + product.getName());
+                    FileLog.writeToFile("Producer waiting..." + "\n");
+                    FileLog.writeToFile("Amount of products in store - " + shop.getStore().size() + "\n");
+                }
+                FileLog.writeToFile("Producer produced - " + product.getName() + "\n");
                 shop.getStore().add(product);
+                FileLog.writeToFile("Amount of products in store - " + shop.getStore().size() + "\n");
                 shop.notify();
             }
         }

@@ -7,6 +7,7 @@ public class MyData {
     private static final String SHOPS_PATH = "shops.csv";
     private static final String PRODUCTS_PATH = "products.csv";
     private static final String ASSORTMENT_PATH = "assortment.csv";
+    public static final String LOG_FILE = "log.txt";
 
     private static Map<Integer, City> cities = new HashMap<>();
 
