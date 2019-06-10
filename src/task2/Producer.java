@@ -1,36 +1,34 @@
 package task2;
 
 import common.Product;
+import java.util.concurrent.BlockingQueue;
 
-public class Producer extends Thread {
-    private NewShop shop;
+public class Producer implements Runnable {
     private Product product;
+    private final BlockingQueue<Product> queue;
+    private Shop shop;
 
-    public Producer(NewShop shop, Product product) {
-        this.shop = shop;
+    public Producer(Shop shop, Product product) {
         this.product = product;
+        this.queue = shop.getStore();
+        this.shop = shop;
     }
 
     public void addProduct() throws InterruptedException {
-        while (true) {
-            synchronized (shop) {
-                while (shop.getStore().size() == shop.storeCapacity()) {
-                    shop.wait();
-                    FileLog.writeToFile("task2.Producer waiting..." + "\n");
-                    FileLog.writeToFile("Amount of products in store - " + shop.getStore().size() + "\n");
-                }
-                FileLog.writeToFile("task2.Producer produced - " + product.getName() + "\n");
-                shop.getStore().add(product);
-                FileLog.writeToFile("Amount of products in store - " + shop.getStore().size() + "\n");
-                shop.notify();
-            }
+        while (shop.getConsumersSize() > 0) {
+            FileLog.writeToFile(System.currentTimeMillis() + ";Producer;produced - " + product.getName() + "\n");
+            queue.put(product);
+            FileLog.writeToFile(System.currentTimeMillis() + ";Producer;products in store - " + shop.getStoreSize() + "\n");
+            FileLog.writeToFile(System.currentTimeMillis() + ";Producer;consumers in shop - " + shop.getConsumersSize() + "\n");
         }
     }
 
     @Override
     public void run() {
         try {
+            FileLog.writeToFile(System.currentTimeMillis() + ";Producer;started\n");
             addProduct();
+            FileLog.writeToFile(System.currentTimeMillis() + ";Producer;finished\n");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
